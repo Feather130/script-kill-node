@@ -2,8 +2,8 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
-import ExportHome from '../../../app/controller/home';
-import ExportScript from '../../../app/controller/script';
+import ExportHome = require('../../../app/controller/home');
+import ExportScript = require('../../../app/controller/script');
 
 declare module 'egg' {
   interface IController {
