@@ -37,6 +37,31 @@ class ScriptService extends Service {
     const aggregate = this.ctx.model.Script.aggregate([{ $match: { ...obj } }, { $project }]);
     return await this.ctx.model.Script.aggregatePaginate(aggregate, paginateOptions);
   }
+
+  async create(params) {
+    const res = await new this.ctx.model.Script({ ...params });
+    await res.save();
+  }
+
+  async show(params) {
+    const { ctx } = this;
+    const result = await ctx.model.Script.find(params, { _id: 0, __v: 0 });
+    if (!result.length) {
+      return {};
+    }
+    return result[0];
+  }
+
+  async update(params) {
+    const { ctx } = this;
+    const { filter, update } = params;
+    await ctx.model.Script.updateOne(filter, { $set: { ...update } });
+  }
+
+  async destroy(params) {
+    const { ctx } = this;
+    await ctx.model.Script.remove(params);
+  }
 }
 
 module.exports = ScriptService;
