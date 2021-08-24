@@ -2,9 +2,9 @@
 
 /** @type Egg.EggPlugin */
 module.exports = {
-  validate: {
+  validateSchema: {
     enable: true,
-    package: 'egg-validate',
+    package: 'egg-validate-schema',
   },
   mongoose: {
     enable: true,

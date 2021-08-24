@@ -23,7 +23,7 @@ module.exports = appInfo => {
   };
 
   config.mongoose = {
-    url: 'mongodb://192.168.56.103:27017/db_script_kill',
+    url: 'mongodb://127.0.0.1:27017/db_script_kill',
     options: {},
     plugins: [ aggregatePaginate ],
   };

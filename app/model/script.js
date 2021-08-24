@@ -22,6 +22,7 @@ module.exports = ({ mongoose }) => {
     duration: String,
     difficulty: String,
     type: String,
+    content: String,
     creation_time: { type: Date, required: false },
     update_time: Date,
   });
