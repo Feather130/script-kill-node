@@ -24,7 +24,11 @@ const createRule = {
         show: { type: 'boolean' },
       },
       required: [ 'value', 'show' ],
-    } },
+    },
+    oneOf: [
+      { properties: { value: { type: 'string', enum: [ '现实', '恐怖', '欢乐', '情感', '武侠', '灵异', '魔幻', '科幻' ] } } },
+    ],
+    },
     people: { type: 'array', maxItems: 3, minItems: 3, items: { type: 'integer' } },
     duration: { enum: [ '1小时以下', '1-2小时', '2-3小时', '3-5小时', '5小时以上' ] },
     difficulty: { enum: [ '入门', '简单', '适中', '困难', '烧脑' ] },
