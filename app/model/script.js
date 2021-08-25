@@ -17,7 +17,7 @@ module.exports = ({ mongoose }) => {
     price: Number,
     grade: { type: Number, max: 10, min: 0 },
     trait: String,
-    tags: [ String ],
+    tags: [ Object ],
     people: [ Number, Number, Number ],
     duration: String,
     difficulty: String,

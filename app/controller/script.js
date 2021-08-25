@@ -92,32 +92,37 @@ class ScriptController extends Controller {
 
   async create() {
     const { ctx, service } = this;
-    const { request, app } = ctx;
+    const { request } = ctx;
     const { body } = request;
-    const error = app.schemaValidator.validateSchema(createRule);
-    console.log(error);
-    // if (error) {
-    // // TODO 更好的错误提示
-    //   console.log(error);
-    //   ctx.body = {
-    //     error,
-    //     status: 400,
-    //   };
-    //   ctx.status = 400;
-    //   return;
-    // }
-    // TODO 查重
-    // const params = {
-    //   ...body,
-    //   creation_time: new Date(),
-    //   update_time: new Date(),
-    // };
-    // await service.script.create(params);
-    // ctx.body = {
-    //   message: '剧本添加成功',
-    //   status: 201,
-    // };
-    // ctx.status = 201;
+    try {
+      ctx.validateBySchema(createRule);
+      const params = {
+        ...body,
+        creation_time: new Date(),
+        update_time: new Date(),
+      };
+
+      try {
+        await service.script.create(params);
+        ctx.body = {
+          message: '剧本添加成功',
+          status: 201,
+        };
+        ctx.status = 201;
+      } catch (error) {
+        ctx.body = {
+          error,
+          status: 400,
+        };
+        ctx.status = 400;
+      }
+    } catch (error) {
+      ctx.body = {
+        error,
+        status: 400,
+      };
+      ctx.status = 400;
+    }
   }
 
   async show() {
@@ -132,45 +137,51 @@ class ScriptController extends Controller {
     ctx.status = 200;
   }
 
-  // async update() {
-  //   const { ctx, service } = this;
-  //   const { app, params, request } = ctx;
-  //   const { id } = params;
-  //   const { body } = request;
-  //   const error = app.validator.validate(updateRule, body);
-  //   if (error) {
-  //   // TODO 更好的错误提示
-  //     console.log(error);
-  //     ctx.body = {
-  //       error,
-  //       status: 400,
-  //     };
-  //     ctx.status = 400;
-  //     return;
-  //   }
-  //   const update = {
-  //     ...body,
-  //     update_time: new Date(),
-  //   };
-  //   const filter = {
-  //     id: Number(id),
-  //   };
-  //   await service.script.update({ filter, update });
-  //   ctx.body = {
-  //     data: {},
-  //     message: '剧本编辑成功',
-  //     status: 200,
-  //   };
-  //   ctx.status = 200;
-  // }
-  //
-  // async destroy() {
-  //   const { ctx, service } = this;
-  //   const { params } = ctx;
-  //   const { id } = params;
-  //   await service.script.destroy({ id });
-  //   ctx.status = 204;
-  // }
+  async update() {
+    const { ctx, service } = this;
+    const { params, request } = ctx;
+    const { id } = params;
+    const { body } = request;
+    try {
+      ctx.validateBySchema(updateRule);
+      const update = {
+        ...body,
+        update_time: new Date(),
+      };
+      const filter = {
+        id: Number(id),
+      };
+      try {
+        await service.script.update({ filter, update });
+        ctx.body = {
+          data: {},
+          message: '剧本编辑成功',
+          status: 200,
+        };
+        ctx.status = 200;
+      } catch (error) {
+        ctx.body = {
+          error,
+          status: 400,
+        };
+        ctx.status = 400;
+      }
+    } catch (error) {
+      ctx.body = {
+        error,
+        status: 400,
+      };
+      ctx.status = 400;
+    }
+  }
+
+  async destroy() {
+    const { ctx, service } = this;
+    const { params } = ctx;
+    const { id } = params;
+    await service.script.destroy({ id });
+    ctx.status = 204;
+  }
 }
 
 module.exports = ScriptController;
